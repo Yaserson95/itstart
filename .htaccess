@@ -1,0 +1,17 @@
+# For full documentation and other suggested options, please see
+# http://rtfm.modx.com/evolution/1.0/administration/friendly-url-solutions
+# including for unexpected logouts in multi-server/cloud environments
+# and especially for the first three commented out rules
+
+#php_flag register_globals Off
+AddDefaultCharset utf-8
+#php_value date.timezone Europe/Moscow
+
+#Options +FollowSymlinks
+RewriteEngine On
+RewriteBase /
+RewriteRule ^(pages|source)/.*$ - [L]
+RewriteRule \.(jpg|jpeg|png|gif|ico)$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?patch=$1 [L]
