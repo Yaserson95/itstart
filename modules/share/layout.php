@@ -18,7 +18,7 @@
 				</head>
 				<body>
 								<div id="regform" class="dialog" title="Регистрация">
-												<?php include_once	'modules/regForm.php';?>
+												<?php include_once	'modules/share/regForm.php';?>
 								</div>
 								<div class="dialog" title="Войти" id="loginform" >
 												<form method="post" name="login" class="dialForm">
@@ -37,11 +37,19 @@
 												</form>
 								</div>
 								<?php
-								include_once	"modules/header.php";
+								include_once	"modules/share/header.php";
+								if(count($this->viewPatch)>0&&$this->showPatch){
+												echo "<p class='patch'>";
+												foreach	($this->viewPatch 	as $n=>	$item)	{
+																if($n>0) echo " > ";
+																echo $this->htmlForms->ActionLink($item['title'],$item['href']);
+												}
+												echo "</p>";
+								}
 								?>
 								<section id="content">
 												<?php
-												include_once	"content/$this->content";
+												include_once	"$this->contentFolder/$this->content";
 												?>
 								</section>
 								<footer id="footer">
