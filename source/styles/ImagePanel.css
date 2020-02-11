@@ -1,0 +1,47 @@
+#images{
+    padding:10px; 
+}
+#images img{
+    margin:0px auto 0px auto;
+    text-align: center;
+}
+#images div{
+    height:150px;
+    width:150px;
+    overflow: hidden;
+    border:2px solid #ccffcc;
+    display: flex;
+    align-items: center;
+    float:left;
+    position: relative;
+    margin: 5px;
+}
+#images .bar{
+    border:none;
+    margin: 0px;
+    opacity: 0;
+    position: absolute;
+    width:100%;
+    height:100%;
+}
+#images .bar:hover{
+    border:none;
+    opacity: 1;
+}
+#images .bar input{
+    position: absolute;
+    top:0px;
+    right:0px;
+    margin: 0px;
+    padding: 0px;
+    width: 25px;
+    height: 25px;
+    border: 1px solid #5d885d;
+    background: white;
+    color: #5d885d;
+    font-weight: bold;
+    cursor:pointer;
+}
+#images .bar input:hover{
+    background: #ccffcc;
+}

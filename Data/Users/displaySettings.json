@@ -1,0 +1,22 @@
+{
+    "Articles":{
+	"Sort":"DatePubl",
+	"Order":true,
+	"Limit":25
+    },
+    "Groups":{
+	"Sort":"Title",
+	"Order":true,
+	"Limit":25
+    },
+    "Discussions":{
+	"Sort":"DatePubl",
+	"Order":true,
+	"Limit":25
+    },
+    "Comments":{
+	"Sort":"DatePubl",
+	"Order":true,
+	"Limit":50
+    }
+}

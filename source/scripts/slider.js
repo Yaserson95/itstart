@@ -1,141 +1,170 @@
-var NEWS = [
-	{
-		title:"Добро пожаловать",
-		mess:"У нас можно найти уникальные и интересные статьи, проверить свои навыки, изучит  чего-нибудь новое и многое другое!",
-		pict:"news00.png",
-		href:"#"
-	},{
-		title:"7 полезных программ, улучшающих стандартные функции Windows",
-		mess:"Эти бесплатные программы сделают работу в Windows более быстрой и удобной.",
-		pict:"frame2.png",
-		href:"#"
-	},{
-		title:"3 программы, которые помогут понять, чем занято место на жёстком диске",
-		mess:"С помощью этих трёх утилит вы сможете найти самые большие ненужные файлы на жёстком диске и безжалостно их удалить.",
-		pict:"frame3.png",
-		href:"#"
-	},{
-		title:"Добавте свою статью",
-		mess:"Если у вас есть что нам рассказать создайте статью. Мы её обязательно прочитаем и оценим.",
-		pict:"news00.png",
-		href:"#"
-	},{
-		title:"Новость пять",
-		mess:"Текст новости пять",
-		pict:"news00.png",
-		href:"#"
-	}
-];
-panel={
-	buttons:[],
-	active:{},
-	setBtn:function(arr){
-		buttons = arr;
+function Slider(config){
+    var slider_cm = {
+	Parent:null,
+	Current:0,
+	Frame:null,
+	Frames:null,
+	Circle:null,
+	Circles:null,
+	Timeout:10000,
+	TimeoutId:null,
+	Init:function(){
+	    switch(typeof config.Target){
+		case "string":
+		    this.Parent = document.getElementById(config.Target);
+		    break;
+		case "object":
+		    this.Parent = config.Target;
+		    break;
+		default:
+		    return 1;
+	    }
+	    this.Parent.className="slider";
+	    var frames = document.createElement("div");
+	    $(this.Parent).append(frames);
+	    this.Frames = frames;
+	    if(config.Slides.length>0){
+		this.Current = Math.floor(Math.random() * Math.floor(config.Slides.length));
+		this.Frame = this.InitFrame(this.Current);
+		$(this.Parent).append(this.InitBar(this.Current));
+		$(this.Frames).append(this.Frame);
+		this.CalcSizes();
+		this.newTimeout(this.Timeout);
+	    }
 	},
-	setActive: function(val){
-		if(typeof active != "undefined"){
-			active.className="btn";
-		}
-		active = buttons[val];
-		active.className="btnActive";
+	newTimeout:function(time){
+	    if(this.TimeoutId!==null){
+		clearTimeout(this.TimeoutId);
+	    }
+	    this.TimeoutId = setTimeout(function(){
+		slider_cm.NextFrame();
+	    }, time);
 	},
-	getActive:function(){
-		return active;
+	CalcSizes:function(){
+	    var h = $(this.Frame).height();
+	    var hl = $(this.Frame).find("div").height();
+	    $(this.Frame).find("div").css({
+		top:parseInt((h-hl)/2)+"px"
+	    });
 	},
-	getIndex:function(){
-		if(typeof active != "undefined")
-		return active.value;
-		else return 0;
+	InitFrame:function(slide){
+	   var frame = document.createElement("div");
+	   var img = document.createElement("img");
+	   var content = document.createElement("div");
+	   frame.className = "frame";
+	   $(frame).css({
+	       width:config.Width+"px",
+	       height:config.Height+"px"
+	   });
+	   img.src = config.Slides[slide].img;
+	   content.innerHTML = config.Slides[slide].html;
+	   $(frame).append(img);
+	   $(frame).append(content);
+	   return frame;
 	},
-	getLength:function(){
-		return buttons.length;
-	}
-}
-$(document).ready(function(){
-	createPanel($("#slider_panel"));
-	setActive(0);
-	//setCurent(0,NEWS,$("#slider_frame"));
-	//$("#slider_frame").append(newSlide(NEWS[CURR_FRAME]));
-    /*addItemsBar($("#slider_panel"));
-     CURR_FRAME=newSlide(NEWS[CURR_NEWS]);
-	$("#slider_frame").append(CURR_FRAME);
-	$("#slider_panel li")[CURR_NEWS].style.listStyleType="disc";
-    $("#slider_panel li").each(function(index,elem){
-		elem.index=index;
-		$(elem).click(setFrame);
-    });
-    $("#next").click(nextFrame);
-    $("#prev").click(prevFrame);
-    CURR_FRAME.timeout=setTimeout(nextFrame, 7000);*/
-});
-function setActive(val){
-	panel.setActive(val);
-}
-function createPanel(node){
-	divPrev = document.createElement("div");
-	divNext = document.createElement("div");
-	spanPrev = document.createElement("span");
-	spanNext = document.createElement("span");
-	Navigator = document.createElement("div");
-	divPrev.id = "prev";
-	divNext.id = "next";
-	Navigator.id = "navigator";
-	var arrB = [];
-	for(i=0;i<NEWS.length;i++){
-		btn = document.createElement("div");
-		btn.className="btn";
-		$(Navigator).append(btn);
-		btn.value = i;
-		btn.onclick=function(){
-			setActive(this.value);
+	InitBar:function(slide){
+	    var bar = document.createElement("div");
+	    var prev = document.createElement("button");
+	    var next = document.createElement("button");
+	    prev.className = "navi prev";
+	    prev.innerHTML = "<";
+	    prev.onclick = function(){
+		slider_cm.PrevFrame();
+	    };
+	    next.className = "navi next";
+	    next.innerHTML = ">";
+	    next.onclick = function(){
+		slider_cm.NextFrame();
+	    };
+	    var circles = document.createElement("span");
+	    circles.className = "circles";
+	    for(var sl in config.Slides){
+		var circle = document.createElement("div");
+		circle.id=parseInt(sl);
+		circle.onclick = function(){
+		    slider_cm.ChangeFrame(this.id);
 		};
-		arrB.push(btn);
+		if(slide==sl){
+		    circle.className="current";
+		    this.Circle = circle;
+		}
+		$(circles).append(circle);
+		
+	    }
+	    $(bar).append(prev);
+	    $(bar).append(circles);
+	    $(bar).append(next);
+	    this.Circles = circles;
+	    bar.className="bar";
+	    return bar;
+	},
+	ChangeFrame:function(frame){
+	    if(this.Current!==frame){
+		this.Current = frame;
+		var newFrame = this.InitFrame(frame);
+		var oldFrame = this.Frame;
+		$(this.Frames).append(newFrame);
+		$(newFrame).css({
+		    opacity:0
+		});
+		$(newFrame).animate({
+		    opacity:1
+		},1000,function(){
+		    $(oldFrame).remove();
+		});
+		this.Frame = newFrame;
+		this.CalcSizes();
+		this.Circle.className="";
+		this.Circle = this.Circles.childNodes[frame];
+		this.Circle.className="current";
+		this.newTimeout(this.Timeout);
+	    }  
+	},
+	NextFrame:function(){
+	    if(this.Current===config.Slides.length-1){
+		this.Current = -1;
+	    }
+	    this.ChangeFrame(parseInt(this.Current)+1);
+	},
+	PrevFrame:function(){
+	    if(this.Current<=0){
+		this.Current = config.Slides.length;
+	    }
+	    this.ChangeFrame(parseInt(this.Current)-1);
 	}
-	$(divPrev).click(prevFrame);
-	$(divNext).click(nextFrame);
-	panel.setBtn(arrB);
-	$(spanPrev).text("<");
-	$(spanNext).text(">");
-	$(divPrev).append(spanPrev);
-	$(divNext).append(spanNext);
-	node.append(divPrev);
-	node.append(Navigator);
-	node.append(divNext);
+    };
+    slider_cm.Init();
+    return slider_cm;
 }
-function nextFrame(){
-	var cur = panel.getIndex();
-	if(cur==panel.getLength()-1)cur=0;
-	else cur++;
-	setActive(cur);
-}
-function prevFrame(){
-	var cur = panel.getIndex();
-	if(cur==0)cur=panel.getLength()-1;
-	else cur--;
-	setActive(cur);
-}
-function setFrame(cur,frm,node){
-	slade = newSlide(NEWS[frm]);
-	if(cur<frm){
-		$("#slider_frame").prepend(slade);
-	}
-	if(cur>frm){
-		$("#slider_frame").apend(slade);
-	}
-}
-function newSlide(item){
-	divSlide = document.createElement("div");
-	divGroup = document.createElement("div");
-	hTitle = document.createElement("h1");
-	pArt = document.createElement("p");
-	imgBack = document.createElement("img");
-	$(divSlide).append(divGroup);
-	$(divSlide).append(imgBack);
-	$(divGroup).append(hTitle);
-	$(divGroup).append(pArt);
-    $(hTitle).text(item.title);
-    $(pArt).text(item.mess);
-	imgBack.src="img/"+item.pict;
-    divSlide.className="slide";
-    return divSlide;
-}
+
+$(document).ready(function(){
+    var data = "/Source/IMG/Slider/";
+    var config = {
+	Width:450,
+	Height:300,
+	Target:"slider",
+	Slides:[
+	    {
+		img:data+"design.png",
+		html:"<h1>Дизайнерам</h1><p>Вы можете найти сдесь оригиналы изображений</p>"
+	    },
+	    {
+		img:data+"developing.png",
+		html:"<h1>Разработчикам</h1><p>Тут есть множество различных решений</p>"
+	    },
+	    {
+		img:data+"forums.png",
+		html:"<h1>Если у вас возникла проблема</h1><p>Наши эксперты помогут вам!</p>"
+	    },
+	    {
+		img:data+"learning.png",
+		html:"<h1>Покажите нам</h1><p>Вы можете поделиться с нами своими знаниями</p>"
+	    },
+	    {
+		img:data+"news.png",
+		html:"<h1>Узнайте что-то новое</h1><p>У нас можно найти интересные статьи, которые вам понравятся</p>"
+	    }
+	]
+    };
+    var slider = new Slider(config);
+});
