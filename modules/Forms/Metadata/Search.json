@@ -1,0 +1,38 @@
+{
+"Parent": {
+    "alias": "Parent",
+    "type": "key",
+    "null": false,
+    "input": "hidden"
+},
+"TypePar": {
+    "alias": "Parent",
+    "type": "key",
+    "null": false,
+    "input": "hidden"
+},
+"Title":{
+    "alias":"Название",
+    "type":"string",
+    "input":"text",
+    "null":false
+},
+"Description":{
+    "alias":"Описание",
+    "type":"string",
+    "input":"textarea",
+    "null":false
+},
+"UserId": {
+    "alias": "Пользователь",
+    "type": "int",
+    "null": false,
+    "input": "hidden"
+},
+"Nickname":{
+    "alias":"Ник",
+    "type":"string",
+    "input":"textarea",
+    "null":false
+}
+}

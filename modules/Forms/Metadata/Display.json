@@ -1,0 +1,102 @@
+{
+"ArticlesSort":{
+    "alias":"Сортировать статьи по",
+    "type":"string",
+    "null":"false",
+    "input": "select",
+    "options":{
+	"DatePubl":"дате публикации",
+	"Rating":"рейтингу",
+	"Name":"названию",
+	"Tags":"тегам"
+    }
+},
+"ArticlesOrder":{
+    "alias":"Упорядочить статьи по",
+    "type":"bool",
+    "null":"false",
+    "input": "select",
+    "options":["убыванию","возрастанию"]
+},
+"ArticlesLimit":{
+    "alias":"Отображать на странице",
+    "type":"int",
+    "null":"false",
+    "input": "text"
+},
+"GroupsSort":{
+    "alias":"Сортировать сообщества по",
+    "type":"string",
+    "null":"false",
+    "input": "select",
+    "options":{
+	"Title":"названию",
+	"Tags":"тегам",
+	"Theme":"тематике",
+	"Users":"количеству пользователей",
+	"Discussions":"количеству обсуждений"
+    }
+},
+"GroupsOrder":{
+    "alias":"Упорядочить сообщества по",
+    "type":"bool",
+    "null":"false",
+    "input": "select",
+    "options":["убыванию","возрастанию"]
+},
+"GroupsLimit":{
+    "alias":"Отображать на странице",
+    "type":"int",
+    "null":"false",
+    "input": "text"
+},
+"DiscussionsSort":{
+    "alias":"Сортировать обсуждения по",
+    "type":"string",
+    "null":"false",
+    "input": "select",
+    "options":{
+	"DatePubl":"дате публикации",
+	"Rating":"рейтингу",
+	"Title":"названию",
+	"Tags":"тегам"
+    }
+},
+"DiscussionsOrder":{
+    "alias":"Упорядочить обсуждения по",
+    "type":"bool",
+    "null":"false",
+    "input": "select",
+    "options":["убыванию","возрастанию"]
+},
+"DiscussionsLimit":{
+    "alias":"Отображать на странице",
+    "type":"int",
+    "null":"false",
+    "input": "text"
+},
+"CommentsSort":{
+    "alias":"Сортировать комментарии по",
+    "type":"string",
+    "null":"false",
+    "input": "select",
+    "options":{
+	"DatePubl":"дате добавления",
+	"Rating":"рейтингу"
+    }
+},
+"CommentsOrder":{
+    "alias":"Упорядочить комментарии по",
+    "type":"bool",
+    "null":"false",
+    "input": "select",
+    "options":["убыванию","возрастанию"]
+},
+"CommentsLimit":{
+    "alias":"Отображать на странице",
+    "type":"int",
+    "null":"false",
+    "input": "text"
+}
+    
+}

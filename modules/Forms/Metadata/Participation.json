@@ -1,0 +1,21 @@
+{
+"GroupId": {
+    "alias": "Номер группы",
+    "type": "key",
+    "null": false,
+    "input": "hidden"
+},
+"UserId": {
+    "alias": "Пользователь",
+    "type": "int",
+    "null": false,
+    "input": "hidden"
+},
+"Post": {
+    "alias": "Роль",
+    "type": "select",
+    "null": false,
+    "input": "hidden",
+    "options":["Пользователь","Модератор","Администратор","Заблокированный"]
+}
+}

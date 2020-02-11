@@ -1,0 +1,48 @@
+{
+"GroupId": {
+    "alias": "Номер группы",
+    "type": "key",
+    "null": false,
+    "input": "hidden"
+},
+"OwnerId": {
+    "alias": "Пользователь",
+    "type": "int",
+    "null": false,
+    "input": "hidden"
+},
+"Title":{
+    "alias":"Название",
+    "type":"string",
+    "input":"text",
+    "null":false,
+    "length":30,
+    "preg":"/^([A-zА-я0-9 .?!-\"]*)$/ui"
+},
+"Theme":{
+    "alias":"Тематика",
+    "type":"string",
+    "input":"text",
+    "null":false,
+    "preg":"/^([A-zА-я0-9 .?!-\"]*)$/ui"
+},
+"Description":{
+    "alias":"Описание",
+    "type":"string",
+    "input":"textarea",
+    "null":false
+},
+"Body":{
+    "alias":"Тело",
+    "type":"string",
+    "input":"textarea",
+    "null":true
+},
+"Mini":{
+    "alias":"Миниатюра",
+    "type":"image",
+    "input":"hidden",
+    "null":false,
+    "id":"Mini"
+}
+}

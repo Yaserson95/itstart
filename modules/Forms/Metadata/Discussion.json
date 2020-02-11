@@ -1,0 +1,46 @@
+{
+    "DiscId":{
+	"type":"key",
+	"alias":"Статья №",
+	"null":false,
+	"input": "text"
+    },				
+    "UserId":{
+	"alias":"Опубликовал",
+	"type":"int",
+	"null":false,
+	"input": "text"
+    },
+    "GroupId":{
+	"alias":"Опубликовал",
+	"type":"int",
+	"null":false,
+	"input": "text"
+    },
+    "Tags":{
+	"alias":"Теги",
+	"type":"string",
+	"input":"text",
+	"null":true,
+	"length":30
+    },	
+    "Title":{
+	"alias":"Теги",
+	"type":"string",
+	"input":"text",
+	"null":false,
+	"length":25
+    },
+    "DatePubl":{
+	"alias":"Опубликовано",
+	"type":"datetime",
+	"input":"text",
+	"null":true
+    },
+    "Text":{
+	"alias":"Текст",
+	"type":"html",
+	"input":"textarea",
+	"null":false
+    }
+}

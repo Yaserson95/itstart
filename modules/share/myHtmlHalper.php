@@ -1,10 +1,30 @@
 <?php
 include "other.php";
+
 class	myHtmlHalper extends baseHtmlatr{
+				protected $value="";
 				public function myHtmlHalper(){
 				}
-				
-				public function ActionLink(string $title,string $href,$atr = null){
+				public static function atributes (array $atr = null){
+								$str = "";
+								if($atr!=null){
+												foreach	($atr	as	$name	=>	$value)	{
+																$str.="$name='$value' ";
+												}
+								}
+								return $str;
+				}
+				public static function DropDownList(string $name, array $data, string $checked=null,array $atr=null){
+								$dr = "<select name='$name' ".myHtmlHalper::atributes($atr).">\n";
+								foreach	($data	as	$key	=>	$value)	{
+												$selected = "";
+											if($checked==$key)$selected="selected = 'selected'";
+											$dr .="<option value='$key' $selected>$value</option>\n";
+								}
+								$dr.= "</select>\n";
+								return $dr;
+				}
+				public	function ActionLink(string $title,string $href,$atr = null){
 								return "<a href='$href' ".$this->atributes($atr).">$title</a>";
 				}
 				public function TextArea(string $name,string $value="",array $atr=null){
@@ -41,14 +61,17 @@ class	myHtmlHalper extends baseHtmlatr{
 				public function Text(string $name,string $value="",array $atr=null){
 								return "<input type = 'text' name='$name' value = '$value' ".$this->atributes($atr)."/>";
 				}
+				
+				
 }
 
 class InputHelper extends baseHtmlatr{
 				private $inputTypes = ["button","checkbox","file","hidden","image","password","radio","reset","submit","text"];
-				private $name="";
-				private $value="";
-				private $atributes=[];
-				private $type="";
+				protected $name="";
+				protected $value="";
+				private $atr=[];
+				protected $type="";
+				private $data=[];
 				public function InputHelper(string $type=null, string $name=null, string $value = null){
 								if($type!=null)$this->setType	($type);
 								if($name!=null)$this->setName	($name);
@@ -63,11 +86,14 @@ class InputHelper extends baseHtmlatr{
 				public function setType(string $type){
 								$this->type = $type;
 				}
+				public function setData(array $data){
+								$this->data = $data;
+				}
 				public function setAtributes(array $atributes){
-								$this->atributes = $atributes;
+								$this->atr= $atributes;
 				}
 				public function addAtribute(string $key,string $value){
-								$this->atributes[$key] = $value;
+								$this->atr[$key] = $value;
 				}
 				public function build(){
 								if(in_array($this->type,	$this->inputTypes)){
@@ -78,11 +104,20 @@ class InputHelper extends baseHtmlatr{
 				}
 				private function BuildInput(){
 								return "<input type='$this->type' name='$this->name' value='$this->value' "
-								.$this->atributes($this->atributes)."/>";
+								.$this->atributes($this->atr)."/>";
 				}
+				
 				private function BuildTag(){
-								return "<$this->type".$this->atributes($this->atributes)." name='$this->name'>$this->value</$this->type>";
+								switch($this->type){
+												case "select": return myHtmlHalper::DropDownList($this->name,	$this->data,	$this->value,	$this->atr);
+												default	: 
+														return	"<$this->type ".$this->atributes($this->atr)." name='$this->name'>$this->value</$this->type>";
+								}
+								
 				}
+				
+				 
+				
 }
 
 

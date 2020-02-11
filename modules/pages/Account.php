@@ -1,6 +1,9 @@
 <?php
 include "modules/Structures/Users.php";
-
+include "modules/Forms/Login.php";
+include "modules/Autorize.php";
+if(IsAutorized())header("Location: /");;
+$db = new Itstart_db();
 $partName = "Account";
 $newPage = new PageBuilder();
 $newPage->setContentFolder("content/$partName");
@@ -15,39 +18,31 @@ if(isset($patch)){
 								$page =	strtolower(array_pop($patch));
 								switch($page){
 												case "register":{
-																if(!empty($_POST)){
-																				$db = new Itstart_db();
-																				$Users = new Users($db);
-																				$user = new User();
-																				$user->setColumnProperty("Priority",	"null",	true);
-																				$user->setColumnProperty("UserId",	"null",	true);
-																				$user->Set($_POST);
-																				if(isset($_POST["Repassword"])){
-																										$Users->Register($user,$_POST["Repassword"]);
-//																								if(empty($mess)){
-//																												$pageName = "index";
-//																												$pageTitle = "Авторизация";
-//																												$newPage->addMessage("Welcome","Регистрация прошла успешно! Теперь вы можете войти в свой аккаунт!");
-//																												break;
-//																								}
-//																								$newPage->addMessage("Error",	$mess);
-																								
-																				}
-																				else $newPage->addMessage("Error",	"Введите подтверждение пароля");
-																}
-																$newPage->addScript("register.js");
-																$newPage->addScript("datepicker.js");
-																$newPage->addStyle("datepicker.css");
-																$pageName = "Register";
-																$pageTitle = "Регистрация";
-																					
-															//	}
+																include_once	'modules/share/UserRegister.php';
 																break;
 												}
 												case "index":{
 																$pageName = "Index";
 																$pageTitle = "Авторизация";
 																break;
+												}
+												case "login":{
+																if(empty($_POST)) header("Location: /$partName");
+																				$login = new Login($_POST);
+																				if($login->isValid()){
+																								$data = $login->getData();
+																								$arr_login = $db->Login($data["Nickname"],	$data["UserPswrd"]);
+																								if(!empty($arr_login)){
+																												
+																												$_SESSION = $arr_login;
+																												echo "0";
+																								}else{
+																												echo "1";
+																								}
+																								unset($arr_login);
+																				}
+																				
+																exit();
 												}
 												default	:{
 																header("Location: /$partName");

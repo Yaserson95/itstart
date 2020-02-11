@@ -1,0 +1,27 @@
+{
+"UserId": {
+    "alias": "Пользователь",
+    "type": "key",
+    "null": false,
+    "input": "hidden"
+},
+"Parent": {
+    "alias": "Родитель",
+    "type": "key",
+    "null": false,
+    "input": "hidden"
+},
+"TypePar": {
+    "alias": "К чему",
+    "type": "key",
+    "null": false,
+    "input": "hidden"
+},
+"Mark": {
+    "alias": "Тип оценки",
+    "type": "select",
+    "null": true,
+    "input": "select",
+    "options":["Понравилось","Не понравилось","Скрыто","Просмотрен"]
+}
+}

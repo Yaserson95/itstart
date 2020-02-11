@@ -1,3 +1,7 @@
+<?php
+				include_once	'modules/autorize.php';
+?>
+
 <!DOCTYPE html>
 <html>
 				<head>
@@ -13,36 +17,49 @@
 																echo	"<script type='text/javascript' src='$this->sources/scripts/$script'></script>";
 												}
 								}
+								foreach	($this->head as $headItem){
+												echo $headItem."\n";
+								}
 								echo	"<title>$this->title</title>";
 								?>
 				</head>
 				<body>
-								<div id="regform" class="dialog" title="Регистрация">
-												<?php include_once	'modules/share/regForm.php';?>
-								</div>
-								<div class="dialog" title="Войти" id="loginform" >
-												<form method="post" name="login" class="dialForm">
-																<table border="0" cellpadding="2" cellspacing="0" >
-																				<tbody>
-																								<tr>
-																												<td><b>Логин/e-mail:</b></td>
-																												<td><input name="login" required="required" type="email" /></td>
-																								</tr>
-																								<tr>
-																												<td><b>Пароль:</b></td>
-																												<td><input name="password" required="required" type="password" /></td>
-																								</tr>
-																				</tbody>
-																</table>
-												</form>
+								<div id="dialogs">
+												<?php
+												foreach	($this->dialogs as $dial => $prop){
+																$filename = $_SERVER["DOCUMENT_ROOT"]."/modules/Dialogs/$dial.php";
+																$title = "";
+																$params = "";
+																if(isset($prop['autorize'])){
+																				if(IsAutorized()!=$prop['autorize']){
+																								continue;
+																				}
+																				unset($prop['autorize']);
+																}
+																foreach	($prop as $key=>$val){
+																				if(strtolower($key)==='id')continue;
+																				$params.=" $key = '$val'";
+																}
+																if(file_exists($filename)){
+																				echo "<div id = '$dial'$params>";
+																				include_once	$filename;
+																				echo "</div>";
+																}
+																
+												}
+												?>
 								</div>
 								<?php
+								
+								//include_once	'modules/share/loginform.php';
 								include_once	"modules/share/header.php";
 								if(count($this->viewPatch)>0&&$this->showPatch){
 												echo "<p class='patch'>";
+												$url="";
 												foreach	($this->viewPatch 	as $n=>	$item)	{
 																if($n>0) echo " > ";
-																echo $this->htmlForms->ActionLink($item['title'],$item['href']);
+																$url.=	trim($item['href'],"/")."/";
+																echo $this->htmlForms->ActionLink($item['title'],$url);
 												}
 												echo "</p>";
 								}

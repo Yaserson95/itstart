@@ -1,0 +1,57 @@
+{
+    "ArtId":{
+	"type":"key",
+	"alias":"Статья №",
+	"null":false,
+	"input": "text"
+    },				
+    "UserId":{
+	"alias":"Опубликовал",
+	"type":"int",
+	"null":false,
+	"input": "text"
+    },	
+    "Name":{
+	"alias":"Название",
+	"type":"string",
+	"input":"text",
+	"null":false,
+	"preg":"/^([A-zА-я0-9 .?!-\"]*)$/ui",
+	"length":40
+    },		
+    "Description":{
+	"alias":"Аннотация",
+	"type":"string",
+	"input":"textarea",
+	"null":false,
+	"length":100
+    },
+    "Mini":{
+	"alias":"Миниатюра",
+	"type":"image",
+	"input":"hidden",
+	"null":false,
+	"id":"Mini"
+    },
+    "ArtType":{
+	"alias":"Тип",
+	"type":"select",
+	"input":"select",
+	"null":false,
+	"options":["Событие","Обзор","Инструкция"]
+	    
+    },
+    "Tags":{
+	"alias":"Теги",
+	"type":"string",
+	"input":"text",
+	"null":true,
+	"length":30
+    },			
+    "DatePubl":{
+	"alias":"Опубликовано",
+	"type":"datetime",
+	"input":"text",
+	"null":true
+    }
+}
